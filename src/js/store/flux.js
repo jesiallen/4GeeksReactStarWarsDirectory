@@ -12,9 +12,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+
+			favorites: [],
+
+			people: [],
+			planets: []
 		},
 		actions: {
+
+			getInfo: (url, sendTo) => {
+				fetch(url)
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error(response.statusText);
+						}
+						return response.json();
+					})
+					.then(data => setStore({ [sendTo] : data.results }))
+					.catch((err) => console.log(err));
+			},
+
+			addToFavs: (newFav, index) => {
+				let newFavorites = getStore().favorites;
+				newFavorites.push(newFav);
+
+				setStore({ favorites: newFavorites });
+			},
+
+			deleteFavorite: (name)=> {
+				let filtered= getStore().favorites.filter((item) => item.name != name);
+
+				setStore({ favorites: filtered });
+			},
+
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

@@ -1,0 +1,7 @@
+.card{
+    display: inline-block;
+}
+.cardRow{
+    overflow-x: auto;
+    white-space: nowrap;
+}
